@@ -1,5 +1,17 @@
-New-PSSession -ConfigurationName Microsoft.Exchange `
-               -ConnectionUri "https://ps.outlook.com/powershell/" `
-               -Authentication Basic `
-               -AllowRedirection
+$user = "miken@sa4sp.com"
+$pwd = ("****" | ConvertTo-SecureString -AsPlainText -Force)
+
+$creds = New-Object  -TypeName System.Management.Automation.PSCredential `
+           -ArgumentList $user, $pwd
+
+$o365 = New-PSSession -ConfigurationName Microsoft.Exchange `
+              -ConnectionUri "https://ps.outlook.com/powershell/" `
+              -Credential $creds `
+              -Authentication Basic `
+              -AllowRedirection
+
+Invoke-Command -Session $o365 `
+               -ScriptBlock {Get-Mailbox} 
+
+Remove-PSSession $o365
 

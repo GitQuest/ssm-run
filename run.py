@@ -22,7 +22,7 @@ while True:
                 CommandId=cmd_id,
                 InstanceId=id)
 
-        if r["Status"] == 'Success':
+        if r["Status"] in ['Success','Failed']:
             break
 
         print(r["Status"])
