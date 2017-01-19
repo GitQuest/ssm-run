@@ -11,7 +11,11 @@ $o365 = New-PSSession -ConfigurationName Microsoft.Exchange `
               -AllowRedirection
 
 Invoke-Command -Session $o365 `
-               -ScriptBlock {Get-Mailbox} 
+               -ScriptBlock { 
+                   Get-Mailbox | Get-MailboxStatistics | `
+                   Select-Object `
+                   DisplayName, IsArchiveMailbox, `
+                   ItemCount, TotalItemSize} 
 
 Remove-PSSession $o365
 
